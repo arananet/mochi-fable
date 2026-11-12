@@ -1,0 +1,12 @@
+{
+  "name": "mochi-fable",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mochi Fable: la fábula 2.5D de un ninja redondo con lazo que casi no salta",
+  "scripts": {
+    "test": "node --test tests/core.test.mjs",
+    "build": "node tools/build.mjs",
+    "start": "python3 -m http.server 8080"
+  }
+}

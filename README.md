@@ -1,0 +1,32 @@
+# Mochi Fable
+
+La fábula 2.5D de un ninja redondo con un gran lazo rojo que casi no salta.
+Beat 'em up de carril con profundidad, pintado y musicado por código: sin assets, sin dependencias.
+
+![Acto I](docs/img/acto1.png)
+![Acto III](docs/img/acto3.png)
+
+## Jugar
+- **Sin servidor:** abre `dist/index.html` (un único fichero autocontenido).
+- **En desarrollo:** `npm start` y visita <http://localhost:8080>.
+
+| Acción | Teclado | Táctil |
+| --- | --- | --- |
+| Mover por el camino | ← ↑ ↓ → / WASD | Palanca izquierda |
+| Golpe (x3 = barrigazo) | Z / J | GOLPE |
+| Saltito (+ golpe = planchazo) | X / K | SALTO |
+| Rodar (esquiva y atropella) | C / L / Mayús | RODAR |
+| Tifón de Lazo (medidor lleno) | Espacio / V | ✿ |
+| Pausa / sonido | P / N | icono ♪ |
+
+Golpea los shuriken para devolverlos. Hay **8 secretos**; la pantalla final da una pista.
+
+## Estructura
+- `src/core.js`: lógica pura (física, alcance, oleadas, códigos secretos, paleta). Tests en `tests/`.
+- `src/world.js`: cielo, 12 capas de parallax, rayos de luz, farolillos, luciérnagas, etalonaje.
+- `src/actors.js`: Mochi, ninjas y jefe animados proceduralmente.
+- `src/audio.js`: vals original en 3/4 y efectos con WebAudio.
+- `src/main.js`: bucle, entrada, combate, IA, HUD.
+- `openspec/`: spec del cambio (método ANVIL). `docs/RUN_REPORT.md`: evidencia de la ejecución.
+
+`npm test` ejecuta los tests; `npm run build` regenera `dist/`.
