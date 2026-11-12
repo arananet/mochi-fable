@@ -8,11 +8,11 @@ const cv = document.getElementById('game'), g = cv.getContext('2d');
 const V = { w: 960, h: 540, hor: 365, scale: 1 };
 const snd = new Sound(), codes = new SecretCodes(CODES);
 const FONT = '"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif';
-const EGGS = { konami: 'Mochi Gigante', mochi: 'Lluvia de dango', fable: 'Modo tinta', moon: 'El conejo de la luna', sun: 'El sol dormilón', picnic: 'La merienda', neko: 'El gato-montaña despierta', bow: '¡El lazo no se toca!' };
+const EGGS = { konami: 'Mochi Gigante', mochi: 'Lluvia de dango', fable: 'Modo tinta', moon: 'El conejo de la luna', sun: 'El sol dormilón', picnic: 'La merienda', neko: 'El gato-montaña despierta', bow: '¡La cinta no se toca!' };
 const store = { get() { try { return JSON.parse(localStorage.getItem('mochi-fable-eggs') || '[]'); } catch { return []; } }, set(v) { try { localStorage.setItem('mochi-fable-eggs', JSON.stringify(v)); } catch { /* sin almacenamiento */ } } };
 
 const best = { get() { try { return JSON.parse(localStorage.getItem('mochi-fable-best') || '{}'); } catch { return {}; } }, set(v) { try { localStorage.setItem('mochi-fable-best', JSON.stringify(v)); } catch { /* sin almacenamiento */ } } };
-const PERKS = { dmg: ['Puños de acero', '+25% de daño'], vamp: ['Lazo vampiro', 'Cada baja te cura 4'], hp: ['Barriga llena', '+30 de vida máxima y cura total'], meter: ['Ansia de mochi', 'El Tifón se carga un 60% más rápido'],
+const PERKS = { dmg: ['Puños de acero', '+25% de daño'], vamp: ['Cinta vampira', 'Cada baja te cura 4'], hp: ['Barriga llena', '+30 de vida máxima y cura total'], meter: ['Ansia de mochi', 'El Tifón se carga un 60% más rápido'],
   boom: ['Barrigazo sísmico', 'El tercer golpe lanza una onda expansiva'], roll: ['Bola de demolición', 'Rodar hace x3 de daño y sin espera'], fury: ['Mecha corta', 'La Furia salta con solo 8 golpes'], shur: ['Estrellas de mochi', 'El tercer golpe lanza un shuriken'] };
 const ONCE = ['boom', 'roll', 'fury', 'shur'];
 
@@ -91,8 +91,8 @@ cv.addEventListener('pointerdown', e => {
   }
   if (G.choice) { for (let i = 0; i < 3; i++) { const r = cardRect(i); if (pt.x > r.x && pt.x < r.x + r.w && pt.y > r.y && pt.y < r.y + r.h && G.choice.t > 0.35) pick(i); } return; }
   if (G.mode !== 'play') { const r = endlessBtn(); begin((G.mode === 'title' || G.mode === 'win') && pt.x > r.x && pt.x < r.x + r.w && pt.y > r.y - 8 && pt.y < r.y + r.h + 8); return; }
-  const p = G.p, px = p.x - G.cam, py = groundY(p.z) - p.y - 88 * depthS(p.z) * p.big;
-  if (Math.hypot(pt.x - px, pt.y - py) < 30) { p.blush = 1.6; secret('bow'); say(p.x, py - 20, '¡Eh, el lazo!', '#ffd0d8', 18); return; }
+  const p = G.p, px = p.x - G.cam, py = groundY(p.z) - p.y - 76 * depthS(p.z) * p.big;
+  if (Math.hypot(pt.x - px, pt.y - py) < 30) { p.blush = 1.6; secret('bow'); say(p.x, py - 20, '¡Eh, la cinta!', '#ffd0d8', 18); return; }
   if (e.pointerType !== 'touch') return;
   if (G.paused) { G.paused = false; return; }
   for (const b of BTN()) if (Math.hypot(pt.x - b.x, pt.y - b.y) < b.r + 10) { touches.set(e.pointerId, b.n); pressed[b.n] = held[b.n] = true; return; }
@@ -210,7 +210,7 @@ function updatePlayer(dt) {
       if (pressed.atk) { p.idleT = 0; startAttack(p); }
       else if (pressed.jump) { p.idleT = 0; p.state = 'jump'; p.st = 0; p.vy = TUNE.playerJumpV; p.y = 0.01; p.squash = 1.22; snd.fx('jump'); dust(p.x, p.z, 5); }
       else if (pressed.roll && p.rollCd <= 0) { p.idleT = 0; p.state = 'roll'; p.st = 0; p.spin = 0; p.hitSet.clear(); p.rollCd = G.perks.roll ? 0.1 : 0.75; if (Math.abs(ax) > 0.2) p.face = Math.sign(ax); snd.fx('roll'); }
-      else if (pressed.spec && p.meter >= 100) { p.idleT = 0; p.state = 'special'; p.st = 0; p.meter = 0; p.pulse = 0; p.spin = 0; p.vx = p.vz = 0; snd.fx('special'); say(p.x, groundY(p.z) - 130, '¡TIFÓN DE LAZO!', '#ff9aa8', 30); }
+      else if (pressed.spec && p.meter >= 100) { p.idleT = 0; p.state = 'special'; p.st = 0; p.meter = 0; p.pulse = 0; p.spin = 0; p.vx = p.vz = 0; snd.fx('special'); say(p.x, groundY(p.z) - 130, '¡TIFÓN DE CINTA!', '#ff9aa8', 30); }
       break;
     }
     case 'jump': p.vx = ax * TUNE.playerSpeed * 0.75; p.vz = az * TUNE.playerZSpeed * 0.6; if (Math.abs(ax) > 0.2) p.face = Math.sign(ax);
@@ -439,7 +439,7 @@ function drawHUD() {
   g.save(); g.fillStyle = 'rgba(40,22,52,.75)'; ell(g, 44, 44, 31, 31); g.fill(); g.fillStyle = G.pal.skyMid; ell(g, 44, 44, 27, 27); g.fill(); g.save(); g.clip(); g.translate(40, 82); g.scale(0.62, 0.62); PORTRAIT.rainbow = p.rainbow; PORTRAIT.state = p.hp < 30 ? 'hurt' : 'idle'; drawMochi(g, PORTRAIT, t); g.restore(); g.restore();
   bar(84, 26, Math.min(320, 1.9 * p.maxHp), 15, p.hp / p.maxHp, p.hp < 30 ? '#ff6a6a' : '#ff9aa8', p.hp < 30 ? '#ffb07a' : '#ffd27a');
   const full = p.meter >= 100; bar(84, 50, 130, 9, p.meter / 100, full ? `hsl(${(t * 300) % 360},90%,70%)` : '#8fd0ff', full ? '#fff' : '#c8a8ff');
-  if (full) ink(G.touch ? '✿ ¡LISTO!' : 'ESPACIO: ¡Tifón de Lazo!', 224, 60, 13, '#fff', 'left');
+  if (full) ink(G.touch ? '✿ ¡LISTO!' : 'ESPACIO: ¡Tifón de Cinta!', 224, 60, 13, '#fff', 'left');
   ink(String(G.score).padStart(6, '0'), w / 2, 36, 22);
   ink(G.muted ? '♪̸' : '♪', w - 30, 36, 22, G.muted ? '#ff9aa8' : '#fff7e6');
   if (G.hits > 1) {
@@ -517,7 +517,7 @@ function frameDraw(dt) {
     if (G.mode === 'over') { veil(0.55); ink('Mochi necesita una siesta…', V.w / 2, V.h * 0.42, 44, '#fff7e6', 'center', 'italic bold'); ink(G.endless ? `Oleada ${G.waveN}   ·   ${G.score} puntos   ·   ${G.kills} bajas   ·   combo ${G.maxHits}` : `${G.score} puntos   ·   ${G.kills} bajas   ·   combo ${G.maxHits}`, V.w / 2, V.h * 0.42 + 40, 19); if (G.newBest) ink('¡NUEVO RÉCORD!', V.w / 2, V.h * 0.42 + 70, 22, `hsl(${(t * 300) % 360},95%,72%)`); ink(G.touch ? 'Toca para volver a intentarlo' : G.endless ? 'ENTER para otra ronda' : 'ENTER para reintentar desde aquí  ·  R reto sin fin', V.w / 2, V.h * 0.42 + 102, 18, '#ffd9a0', 'center', 'italic'); }
     if (G.mode === 'win') { veil(0.25); ink('Fin', V.w / 2, V.h * 0.3, 80, '#fffdf0', 'center', 'italic bold'); ink('…y Mochi por fin pudo merendar en paz.', V.w / 2, V.h * 0.3 + 44, 22, '#ffe9b0', 'center', 'italic'); ink(`Puntos: ${G.score}${G.newBest ? ' ¡récord!' : ''}   ·   Bajas: ${G.kills}   ·   Combo: ${G.maxHits}   ·   Secretos: ${G.eggs.size}/${Object.keys(EGGS).length}`, V.w / 2, V.h * 0.3 + 80, 18); { const r = endlessBtn(); g.fillStyle = 'rgba(90,16,40,.85)'; g.beginPath(); g.roundRect(r.x - r.w / 2 - 12, r.y + 60, r.w, r.h, 20); g.fill(); ink(G.touch ? 'Reto sin fin' : 'R · Reto sin fin', V.w / 2, r.y + 87, 19, '#ffd0d8'); } if (G.eggs.size < 8) ink('Pista: prueba un código clásico, teclea su nombre, toca el cielo… o no hagas nada.', V.w / 2, V.h * 0.3 + 106, 14, '#e8d8ff', 'center', 'italic'); }
     if (G.choice) drawChoice();
-    if (G.paused) { veil(0.6); ink('Pausa', V.w / 2, V.h * 0.36, 60, '#fffdf0', 'center', 'italic bold'); ['← ↑ ↓ → / WASD  mover por el camino', 'Z / J  golpe (x3 = barrigazo)   ·   X / K  saltito (+ golpe = planchazo)', 'C / L  rodar (esquiva y atropella)   ·   ESPACIO  Tifón de Lazo', 'Golpea los shuriken para devolverlos   ·   N  sonido   ·   P  seguir'].forEach((s, i) => ink(s, V.w / 2, V.h * 0.36 + 50 + i * 26, 16, '#fff7e6', 'center', 'normal')); }
+    if (G.paused) { veil(0.6); ink('Pausa', V.w / 2, V.h * 0.36, 60, '#fffdf0', 'center', 'italic bold'); ['← ↑ ↓ → / WASD  mover por el camino', 'Z / J  golpe (x3 = barrigazo)   ·   X / K  saltito (+ golpe = planchazo)', 'C / L  rodar (esquiva y atropella)   ·   ESPACIO  Tifón de Cinta', 'Golpea los shuriken para devolverlos   ·   N  sonido   ·   P  seguir'].forEach((s, i) => ink(s, V.w / 2, V.h * 0.36 + 50 + i * 26, 16, '#fff7e6', 'center', 'normal')); }
   }
   drawToast();
 }

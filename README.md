@@ -1,6 +1,6 @@
 # Mochi Fable
 
-La fábula 2.5D de un ninja redondo con un gran lazo rojo que casi no salta.
+La fábula 2.5D de un ninja redondo con una cinta ninja roja que casi no salta.
 Beat 'em up de carril con profundidad, pintado y musicado por código: sin assets, sin dependencias.
 
 ![Acto I](docs/img/acto1.png)
@@ -17,7 +17,7 @@ Beat 'em up de carril con profundidad, pintado y musicado por código: sin asset
 | Golpe (x3 = barrigazo) | Z / J | GOLPE |
 | Saltito (+ golpe = planchazo) | X / K | SALTO |
 | Rodar (esquiva y atropella) | C / L / Mayús | RODAR |
-| Tifón de Lazo (medidor lleno) | Espacio / V | ✿ |
+| Tifón de Cinta (medidor lleno) | Espacio / V | ✿ |
 | Pausa / sonido | P / N | icono ♪ |
 
 Golpea los shuriken para devolverlos. Hay **8 secretos**; la pantalla final da una pista.

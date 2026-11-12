@@ -1,7 +1,7 @@
 # Mochi Fable
 
 Juego web 2.5D (beat 'em up de carril con profundidad) sobre Mochi, un ninja redondo
-con un gran lazo rojo que apenas salta. Proyecto construido con el método ANVIL:
+con una cinta ninja roja que apenas salta. Proyecto construido con el método ANVIL:
 spec OpenSpec -> tests en rojo -> implementación en verde -> revisión -> run report.
 
 ## Convenciones

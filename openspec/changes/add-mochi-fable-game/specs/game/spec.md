@@ -3,7 +3,7 @@
 ## ADDED Requirements
 
 ### Requirement: Héroe redondo que casi no salta
-El jugador controla a Mochi, un ninja gordo con un lazo rojo en la cabeza. Su salto SHALL
+El jugador controla a Mochi, un ninja gordo con una cinta ninja roja en la frente. Su salto SHALL
 alcanzar menos de un tercio de la altura del salto de un ninja enemigo.
 
 #### Scenario: Saltito

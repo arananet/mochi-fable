@@ -27,29 +27,24 @@ function bowColors(p, t) {
   if (p.rainbow) return [`hsl(${(t * 220) % 360},90%,62%)`, `hsl(${(t * 220 + 50) % 360},85%,45%)`];
   return [K('#e8404f'), K('#a52438')];
 }
+// cinta ninja (hachimaki): banda en la frente, nudo detrás y dos colas al viento
 function ribbons(g, p, t) {
-  const [red, dk] = bowColors(p, t), sp = Math.min(40, Math.abs(p.vx) * 0.09);
+  const [red, dk] = bowColors(p, t), sp = Math.min(46, Math.abs(p.vx) * 0.1), shake = p.blush > 0 ? Math.sin(t * 38) * 6 : 0;
   g.lineCap = 'round';
   for (let i = 0; i < 2; i++) {
-    const ph = t * 7 + i * 1.7, ex = -30 - sp - i * 7, ey = -66 + i * 9 + Math.sin(ph) * 5 - clamp(p.vy * 0.04, -18, 18);
-    g.beginPath(); g.moveTo(-2, -87); g.quadraticCurveTo(-16 - sp * 0.5, -94 + Math.sin(ph + 1) * 4, ex, ey);
-    g.lineWidth = 7 - i * 1.5; g.strokeStyle = i ? dk : red; g.stroke();
+    const ph = t * 7 + i * 1.7, ex = -74 - sp - i * 9, ey = -62 + i * 12 + Math.sin(ph) * 6 - clamp(p.vy * 0.05, -22, 22) + shake;
+    g.beginPath(); g.moveTo(-38, -71); g.quadraticCurveTo(-54 - sp * 0.5, -80 + Math.sin(ph + 1) * 5 + i * 6, ex, ey);
+    g.lineWidth = 7.5 - i * 1.5; g.strokeStyle = i ? dk : red; g.stroke();
   }
 }
-function bow(g, p, t) {
+function band(g, p, t) {
   const [red, dk] = bowColors(p, t);
-  const flap = Math.sin(t * 5) * 0.08 + clamp(p.vy * 0.0018, -0.5, 0.5) + (p.blush > 0 ? Math.sin(t * 38) * 0.35 : 0);
-  g.save(); g.translate(1, -88); g.lineWidth = 2; g.lineJoin = 'round';
-  for (const s of [-1, 1]) {
-    g.save(); g.scale(s, 1); g.rotate(flap);
-    g.beginPath(); g.moveTo(0, 0); g.bezierCurveTo(8, -27, 38, -25, 35, -3); g.bezierCurveTo(33, 13, 9, 9, 0, 0);
-    g.fillStyle = red; g.fill(); g.strokeStyle = white ? '#fff' : INK; g.stroke();
-    g.beginPath(); g.moveTo(5, -1); g.quadraticCurveTo(17, -9, 28, -6); g.strokeStyle = dk; g.stroke();
-    g.fillStyle = 'rgba(255,255,255,.35)'; ell(g, 22, -13, 6, 2.5, -0.4); g.fill();
-    g.restore();
-  }
-  g.fillStyle = red; ell(g, 0, 0, 6.5, 6); g.fill(); g.strokeStyle = white ? '#fff' : INK; g.stroke();
+  g.save(); bodyPath(g); g.clip();
+  g.beginPath(); g.moveTo(-52, -73); g.quadraticCurveTo(0, -93, 52, -73); g.lineTo(52, -64); g.quadraticCurveTo(0, -84, -52, -64); g.closePath();
+  g.fillStyle = red; g.fill(); g.strokeStyle = white ? '#fff' : INK; g.lineWidth = 1.6; g.stroke();
+  g.strokeStyle = dk; g.lineWidth = 1.4; g.beginPath(); g.moveTo(-44, -68); g.quadraticCurveTo(0, -86, 44, -68); g.stroke();
   g.restore();
+  g.fillStyle = red; ell(g, -39, -70, 6, 6.5, 0.3); g.fill(); g.strokeStyle = white ? '#fff' : INK; g.lineWidth = 1.8; g.stroke();
 }
 export function drawMochi(g, p, t) {
   white = p.flash > 0;
@@ -137,7 +132,7 @@ export function drawMochi(g, p, t) {
     g.strokeStyle = `rgba(255,250,225,${punch * 0.8})`; g.lineWidth = 5 * punch; g.lineCap = 'round';
     g.beginPath(); if (p.combo < 3) g.arc(30, -40, 44 + reach * 0.5, -0.7, 0.6); else g.arc(0, -40, 62, -0.9, 0.9); g.stroke();
   }
-  bow(g, p, t);
+  band(g, p, t);
   g.restore(); white = false;
 }
 
