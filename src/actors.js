@@ -145,6 +145,7 @@ export function drawMochi(g, p, t) {
 const NT = {
   grunt: { m: '#5c547c', d: '#39334f', a: '#e4525f', s: 1, w: 1 },
   thrower: { m: '#3b7682', d: '#264e58', a: '#f4c44f', s: 0.95, w: 0.88 },
+  bomber: { m: '#d9772e', d: '#8a4418', a: '#2a2030', s: 0.82, w: 0.95 },
   brute: { m: '#8c4452', d: '#5c2a36', a: '#f4e5c6', s: 1.32, w: 1.55 },
   boss: { m: '#2e2644', d: '#19132a', a: '#b860f4', s: 1.58, w: 1.25 },
 };
@@ -214,6 +215,9 @@ export function drawNinja(g, e, t) {
     g.strokeStyle = K('#6b4a34'); g.lineWidth = 5; g.beginPath(); g.moveTo(hx2 - wx * 6, hy2 - wy * 6); g.lineTo(hx2 + wx * 16, hy2 + wy * 16); g.stroke();
     g.lineWidth = 12; g.beginPath(); g.moveTo(hx2 + wx * 18, hy2 + wy * 18); g.lineTo(hx2 + wx * 48, hy2 + wy * 48); g.stroke();
     g.fillStyle = K('#d8d2c4'); for (let i = 0; i < 3; i++) { ell(g, hx2 + wx * (24 + i * 10), hy2 + wy * (24 + i * 10), 2, 2); g.fill(); }
+  } else if (e.kind === 'bomber') {
+    g.fillStyle = K('#1d1a26'); ell(g, hx2 + 5, hy2 - 7, 10, 10); g.fill(); g.strokeStyle = K('#c9a070'); g.lineWidth = 2; g.beginPath(); g.moveTo(hx2 + 9, hy2 - 16); g.quadraticCurveTo(hx2 + 14, hy2 - 24, hx2 + 11, hy2 - 27); g.stroke();
+    if (!white) { g.fillStyle = (t * (tele ? 22 : 9)) % 1 < 0.5 ? '#ffe04a' : '#ff6a2a'; ell(g, hx2 + 11, hy2 - 28, tele ? 5 : 3, tele ? 5 : 3); g.fill(); }
   } else if (tele) { g.save(); g.translate(hx2, hy2); g.rotate(t * 20); star(g, 8, K('#dfe8f0')); g.restore(); }
   g.fillStyle = K('#f0d3b6'); ell(g, hx2, hy2, 4, 4); g.fill();
   if (tele && !white) { g.fillStyle = '#ff4a4a'; g.font = 'bold 22px Georgia'; g.textAlign = 'center'; g.fillText('!', hx + 2, hy - 30 - Math.abs(Math.sin(a * 14)) * 5); }

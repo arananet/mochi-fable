@@ -5,6 +5,7 @@ Beat 'em up de carril con profundidad, pintado y musicado por código: sin asset
 
 ![Acto I](docs/img/acto1.png)
 ![Acto III](docs/img/acto3.png)
+![Furia](docs/img/furia.png)
 
 ## Jugar
 - **Sin servidor:** abre `dist/index.html` (un único fichero autocontenido).
@@ -20,6 +21,14 @@ Beat 'em up de carril con profundidad, pintado y musicado por código: sin asset
 | Pausa / sonido | P / N | icono ♪ |
 
 Golpea los shuriken para devolverlos. Hay **8 secretos**; la pantalla final da una pista.
+
+## Lo que engancha
+- **Sangre y trozos:** cada golpe salpica, las bajas revientan y las manchas se quedan en el camino.
+- **Combos con rango** (C, B, A, S, SS, MOCHI) que multiplican la puntuación, y **Furia** a los 15 golpes seguidos.
+- **Malabares:** remata enemigos en el aire, estréllalos contra el borde o úsalos de bolos contra los demás.
+- **Ninjas-bomba:** explotan junto a ti... o junto a sus compañeros si los lanzas a tiempo.
+- **Mejoras:** tras cada combate eliges 1 de 3 (vampirismo, onda sísmica, shuriken propios...).
+- **Reto sin fin** (tecla R): oleadas cada vez más duras, jefe cada 5 y récords guardados.
 
 ## Estructura
 - `src/core.js`: lógica pura (física, alcance, oleadas, códigos secretos, paleta). Tests en `tests/`.

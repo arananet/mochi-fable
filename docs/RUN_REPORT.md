@@ -24,3 +24,10 @@ no se ejecutó su tooling; se siguió su flujo (spec, TDD, evidencia) sin sus ag
   no lanza errores.
 - Rendimiento en móviles reales y Safari/Firefox: no probado.
 - El equilibrio de dificultad solo se ha medido con el bot, no con jugadores.
+
+## Iteración 2: más entretenido, sangriento y adictivo
+- Añadido: sangre y desmembramientos con manchas persistentes, rangos de combo con multiplicador, Furia,
+  malabares aéreos, rebote contra el borde y "bolos", ninja-bomba, 8 mejoras a elegir y Reto sin fin con récords.
+- `npm test`: 9/9. El bot vuelve a completar la historia (~200 s) eligiendo mejoras, y en Reto sin fin
+  llega a la oleada 8 en 150 s; sin errores de consola en ambos.
+- No verificado: la pantalla de derrota del Reto sin fin (el bot no llegó a morir) y el guardado de récords.

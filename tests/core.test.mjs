@@ -68,3 +68,9 @@ test('daño y combo', () => {
   assert.equal(nextCombo(0, 0), 1); assert.equal(nextCombo(1, 0.2), 2);
   assert.equal(nextCombo(2, 0.2), 3); assert.equal(nextCombo(3, 0.2), 1); assert.equal(nextCombo(2, 0), 1);
 });
+
+test('rangos de combo: suben con los golpes y multiplican la puntuación', async () => {
+  const { rankIdx, rankMult, RANKS } = await import('../src/core.js');
+  assert.equal(rankIdx(0), 0); assert.equal(RANKS[rankIdx(5)][1], 'C'); assert.equal(RANKS[rankIdx(27)][1], 'A');
+  assert.equal(RANKS[rankIdx(999)][1], 'MOCHI'); assert.equal(rankMult(0), 1); assert.ok(rankMult(28) > rankMult(10));
+});

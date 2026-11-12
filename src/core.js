@@ -41,6 +41,7 @@ export const nextCombo = (combo, window) => (window > 0 && combo > 0 && combo < 
 export const ENEMY = {
   grunt: { hp: 30, speed: 100, dmg: 8, reach: 66, windup: 0.45, recover: 0.5, score: 100, armor: false },
   thrower: { hp: 22, speed: 115, dmg: 6, reach: 0, windup: 0.5, recover: 0.6, score: 150, armor: false },
+  bomber: { hp: 16, speed: 150, dmg: 20, reach: 52, windup: 0.8, recover: 0.1, score: 200, armor: false },
   brute: { hp: 75, speed: 62, dmg: 16, reach: 78, windup: 0.7, recover: 0.8, score: 300, armor: true },
   boss: { hp: 420, speed: 95, dmg: 14, reach: 96, windup: 0.5, recover: 0.55, score: 2000, armor: true },
 };
@@ -53,11 +54,11 @@ export const LEVEL = {
     { x: 3950, name: 'Acto III', sub: 'El santuario de la luna' },
   ],
   arenas: [
-    { x: 800, waves: [['grunt', 'grunt'], ['grunt', 'grunt', 'thrower']] },
-    { x: 1600, waves: [['grunt', 'thrower', 'grunt'], ['brute']] },
-    { x: 2600, waves: [['grunt', 'grunt', 'thrower', 'thrower']] },
-    { x: 3400, waves: [['brute', 'grunt', 'grunt'], ['thrower', 'thrower', 'brute']] },
-    { x: 4400, waves: [['grunt', 'grunt', 'grunt', 'thrower'], ['brute', 'brute']] },
+    { x: 800, waves: [['grunt', 'grunt', 'grunt'], ['grunt', 'grunt', 'thrower', 'bomber']] },
+    { x: 1600, waves: [['grunt', 'thrower', 'grunt', 'bomber'], ['brute', 'grunt', 'grunt']] },
+    { x: 2600, waves: [['grunt', 'grunt', 'thrower', 'thrower', 'bomber'], ['bomber', 'bomber', 'grunt', 'grunt']] },
+    { x: 3400, waves: [['brute', 'grunt', 'grunt', 'thrower'], ['thrower', 'thrower', 'brute', 'bomber', 'grunt']] },
+    { x: 4400, waves: [['grunt', 'grunt', 'grunt', 'thrower', 'bomber', 'bomber'], ['brute', 'brute', 'thrower', 'grunt']] },
     { x: 5400, waves: [['boss']] },
   ],
 };
@@ -135,3 +136,8 @@ export function paletteAt(p) {
   r.ambRGB = [0, 1, 2].map(j => lerp(a.amb[j], b.amb[j], f) / 255);
   pcache.set(q, r); return r;
 }
+
+// ---------- estilo: rangos de combo ----------
+export const RANKS = [[0, ''], [5, 'C'], [10, 'B'], [18, 'A'], [28, 'S'], [40, 'SS'], [60, 'MOCHI']];
+export function rankIdx(h) { let i = 0; while (i < RANKS.length - 1 && h >= RANKS[i + 1][0]) i++; return i; }
+export const rankMult = h => 1 + rankIdx(h) * 0.5;
